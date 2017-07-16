@@ -1,4 +1,7 @@
 package com.vancuongngo.springwebapp.repository;
 
-public class ProductRepository {
+import com.vancuongngo.springwebapp.model.Product;
+import org.springframework.data.repository.CrudRepository;
+
+public interface ProductRepository extends CrudRepository<Product, Integer> {
 }
