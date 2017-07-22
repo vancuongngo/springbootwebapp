@@ -13,7 +13,6 @@ public class WelcomeController {
 
     @RequestMapping(value = {"", "/index"})
     public String index() {
-        productService.saveProducts();
         return "index";
     }
 }

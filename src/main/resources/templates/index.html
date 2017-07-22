@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
     <title>Welcome to Spring Boot Web Application</title>
+    <th:block th:include="headerinc :: head"></th:block>
 </head>
 <body>
-Hello world.
+<div class="container">
+    <th:block th:include="header :: header"></th:block>
+</div>
 </body>
 </html>
