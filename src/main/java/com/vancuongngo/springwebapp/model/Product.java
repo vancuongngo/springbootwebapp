@@ -13,16 +13,12 @@ import java.math.BigDecimal;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Version
-    private Integer version;
+public class Product extends AbstractDomainClass {
 
     private String productId;
+
     private String description;
+
     private String imageUrl;
 
     private BigDecimal price;

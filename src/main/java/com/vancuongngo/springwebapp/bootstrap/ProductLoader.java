@@ -1,7 +1,11 @@
 package com.vancuongngo.springwebapp.bootstrap;
 
 import com.vancuongngo.springwebapp.model.Product;
+import com.vancuongngo.springwebapp.model.Role;
+import com.vancuongngo.springwebapp.model.User;
 import com.vancuongngo.springwebapp.repository.ProductRepository;
+import com.vancuongngo.springwebapp.service.security.role.RoleService;
+import com.vancuongngo.springwebapp.service.security.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -9,6 +13,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /*
 * How to run code on start up with Spring Boot: https://springframework.guru/running-code-on-spring-boot-startup/
@@ -18,15 +23,89 @@ import java.math.BigDecimal;
 public class ProductLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private ProductRepository productRepository;
+    private UserService userService;
+    private RoleService roleService;
 
     @Autowired
     public void setProductRepository(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        loadProducts();
+        loadUsers();
+        loadRoles();
+        assignUsersToUserRole();
+        assignUsersToAdminRole();
+    }
 
+    private void assignUsersToAdminRole() {
+        List<Role> roles = (List<Role>) roleService.listAll();
+        List<User> users = (List<User>) userService.listAll();
+
+        roles.forEach(role -> {
+            if (role.getRole().equalsIgnoreCase("ADMIN")) {
+                users.forEach(user -> {
+                    if (user.getUsername().equals("admin")) {
+                        user.addRole(role);
+                        userService.saveOrUpdate(user);
+                    }
+                });
+            }
+        });
+    }
+
+    private void assignUsersToUserRole() {
+        List<Role> roles = (List<Role>) roleService.listAll();
+        List<User> users = (List<User>) userService.listAll();
+
+        roles.forEach(role -> {
+            if (role.getRole().equalsIgnoreCase("USER")) {
+                users.forEach(user -> {
+                    if (user.getUsername().equals("user")) {
+                        user.addRole(role);
+                        userService.saveOrUpdate(user);
+                    }
+                });
+            }
+        });
+    }
+
+    private void loadRoles() {
+        Role role = new Role();
+        role.setRole("USER");
+        roleService.saveOrUpdate(role);
+        log.info("Saved role " + role.getRole());
+        Role adminRole = new Role();
+        adminRole.setRole("ADMIN");
+        roleService.saveOrUpdate(adminRole);
+        log.info("Saved role " + adminRole.getRole());
+    }
+
+    private void loadUsers() {
+        User user1 = new User();
+        user1.setUsername("user");
+        user1.setPassword("1");
+        userService.saveOrUpdate(user1);
+
+        User user2 = new User();
+        user2.setUsername("admin");
+        user2.setPassword("2");
+        userService.saveOrUpdate(user2);
+    }
+
+    private void loadProducts() {
         Product book = new Product();
         book.setDescription("Tôi Của Mùa Hè Năm Ấy");
         book.setPrice(new BigDecimal("79"));
