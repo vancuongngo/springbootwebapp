@@ -1,6 +1,6 @@
 package com.vancuongngo.springwebapp.service.security.role;
 
-import com.vancuongngo.springwebapp.model.Role;
+import com.vancuongngo.springwebapp.repository.model.Role;
 import com.vancuongngo.springwebapp.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;

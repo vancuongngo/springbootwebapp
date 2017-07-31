@@ -9,6 +9,12 @@
 
     <link href="../static/css/style.css"
           th:href="@{/css/style.css}" rel="stylesheet" media="screen"/>
+
+    <script th:src="@{/js/product.js}" />
+
+    <script th:inline="javascript">
+        var CONTEXT_ROOT = [[@{/}]];
+    </script>
 </head>
 
 </html>

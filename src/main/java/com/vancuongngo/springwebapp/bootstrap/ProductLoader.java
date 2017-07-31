@@ -1,8 +1,8 @@
 package com.vancuongngo.springwebapp.bootstrap;
 
-import com.vancuongngo.springwebapp.model.Product;
-import com.vancuongngo.springwebapp.model.Role;
-import com.vancuongngo.springwebapp.model.User;
+import com.vancuongngo.springwebapp.repository.model.Product;
+import com.vancuongngo.springwebapp.repository.model.Role;
+import com.vancuongngo.springwebapp.repository.model.User;
 import com.vancuongngo.springwebapp.repository.ProductRepository;
 import com.vancuongngo.springwebapp.service.security.role.RoleService;
 import com.vancuongngo.springwebapp.service.security.user.UserService;

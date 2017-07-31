@@ -1,6 +1,6 @@
-package com.vancuongngo.springwebapp.controller;
+package com.vancuongngo.springwebapp.controller.view;
 
-import com.vancuongngo.springwebapp.model.Product;
+import com.vancuongngo.springwebapp.repository.model.Product;
 import com.vancuongngo.springwebapp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

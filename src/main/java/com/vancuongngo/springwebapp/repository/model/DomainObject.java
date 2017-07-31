@@ -1,4 +1,4 @@
-package com.vancuongngo.springwebapp.model;
+package com.vancuongngo.springwebapp.repository.model;
 
 public interface DomainObject {
     int getId();

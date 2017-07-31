@@ -1,6 +1,6 @@
 package com.vancuongngo.springwebapp.service;
 
-import com.vancuongngo.springwebapp.model.Product;
+import com.vancuongngo.springwebapp.repository.model.Product;
 import org.springframework.stereotype.Service;
 
 @Service

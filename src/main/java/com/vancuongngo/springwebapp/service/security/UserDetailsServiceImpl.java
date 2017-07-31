@@ -1,7 +1,7 @@
 package com.vancuongngo.springwebapp.service.security;
 
-import com.vancuongngo.springwebapp.model.Role;
-import com.vancuongngo.springwebapp.model.User;
+import com.vancuongngo.springwebapp.repository.model.Role;
+import com.vancuongngo.springwebapp.repository.model.User;
 import com.vancuongngo.springwebapp.service.security.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +31,6 @@ public class UserDetailsServiceImpl implements UserDetailsService{
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUsername(username);
         if (user == null) {
-            log.debug("xxxxxxxxxxxxxxxxxxxxxx");
             throw new UsernameNotFoundException(username);
         }
 

@@ -1,6 +1,6 @@
 package com.vancuongngo.springwebapp.service.security.user;
 
-import com.vancuongngo.springwebapp.model.User;
+import com.vancuongngo.springwebapp.repository.model.User;
 import com.vancuongngo.springwebapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
