@@ -2,7 +2,6 @@ package com.vancuongngo.springwebapp.configuration;
 
 import com.vancuongngo.springwebapp.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -18,13 +17,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
-    private AuthenticationProvider authenticationProvider;
-
     @Autowired
-    @Qualifier("authenticationProvider")
-    public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
-        this.authenticationProvider = authenticationProvider;
-    }
+    private AuthenticationProvider authenticationProvider;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -51,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .authorizeRequests().antMatchers("/", "/index","/product/all","/product/show/*","/h2-console/**").permitAll()
+                .authorizeRequests().antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
