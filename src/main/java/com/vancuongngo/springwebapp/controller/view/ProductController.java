@@ -3,6 +3,7 @@ package com.vancuongngo.springwebapp.controller.view;
 import com.vancuongngo.springwebapp.repository.model.Product;
 import com.vancuongngo.springwebapp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,12 +55,14 @@ public class ProductController {
     }
 
     @GetMapping(value = "/edit/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String editProduct(@PathVariable int id, Model model) {
         model.addAttribute("product", productService.getProductById(id));
         return "product-form";
     }
 
     @GetMapping(value = "/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
         return "redirect:/product/all";
