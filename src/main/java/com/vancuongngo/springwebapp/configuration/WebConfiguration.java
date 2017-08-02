@@ -45,8 +45,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     public FilterRegistrationBean adminToolFilterRegistrationBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setName("adminToolFilter");
-        AdminToolFilter adminToolFilter = new AdminToolFilter();
-        registrationBean.setFilter(adminToolFilter);
+        registrationBean.addUrlPatterns("/product/*");
+        registrationBean.setFilter(new AdminToolFilter());
         registrationBean.setOrder(1);
         return registrationBean;
     }
@@ -55,8 +55,8 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
     public FilterRegistrationBean anotherToolFilterRegistrationBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         registrationBean.setName("anotherToolFilter");
-        AnotherToolFilter anotherToolFilter = new AnotherToolFilter();
-        registrationBean.setFilter(anotherToolFilter);
+        registrationBean.addUrlPatterns("/ajax/*");
+        registrationBean.setFilter(new AnotherToolFilter());
         registrationBean.setOrder(2);
         return registrationBean;
     }

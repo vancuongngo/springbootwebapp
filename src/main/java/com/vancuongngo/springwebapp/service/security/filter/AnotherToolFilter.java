@@ -14,7 +14,7 @@ public class AnotherToolFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        log.debug("doFilter inside AnotherToolFilter");
+        log.debug("doFilter against ajax request");
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
