@@ -11,10 +11,17 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    DataSource dataSource;
 
     @Autowired
     UserDetailsServiceImpl userDetailsService;
@@ -55,10 +62,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage("/login").failureForwardUrl("/login?error").permitAll()
                 .and()
-                .rememberMe().rememberMeParameter("remember-me-param").rememberMeCookieName("my-remember-me").tokenValiditySeconds(86400)
+                .rememberMe().rememberMeParameter("remember-me-param").rememberMeCookieName("my-remember-me").tokenValiditySeconds(86400).tokenRepository(persistentTokenRepository())
                 .and()
                 .logout().permitAll();
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
     }
 }

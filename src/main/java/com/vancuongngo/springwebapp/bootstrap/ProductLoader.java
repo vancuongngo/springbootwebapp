@@ -107,7 +107,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
 
     private void loadProducts() {
         Product book = new Product();
-        book.setDescription("Tôi Của Mùa Hè Năm Ấy");
+        book.setDescription("Toi cua mua he nam ay");
         book.setPrice(new BigDecimal("79"));
         book.setImageUrl("https://tiki.vn/toi-cua-mua-he-nam-ay-p720085.html");
         book.setProductId("1");
@@ -116,7 +116,7 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
         log.info("Saved Book - id: " + book.getId());
 
         Product book2 = new Product();
-        book2.setDescription("Thời Gian Trôi Mãi");
+        book2.setDescription("Thoi gian troi mai");
         book2.setPrice(new BigDecimal("72"));
         book2.setImageUrl("https://tiki.vn/thoi-gian-troi-mai-p343327.html");
         book2.setProductId("2");
