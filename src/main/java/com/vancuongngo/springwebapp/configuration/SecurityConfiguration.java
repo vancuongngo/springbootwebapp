@@ -56,8 +56,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/product/new").hasAuthority("ADMIN")
+                .antMatchers("/product/new", "/console/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").failureForwardUrl("/login?error").permitAll()

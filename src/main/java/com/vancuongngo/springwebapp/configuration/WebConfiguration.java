@@ -38,7 +38,12 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new ServletWebArgumentResolverAdapter(new CustomWebArgumentResolver()));
+        argumentResolvers.add(new ServletWebArgumentResolverAdapter(customWebArgumentResolver()));
+    }
+
+    @Bean
+    public CustomWebArgumentResolver customWebArgumentResolver() {
+        return new CustomWebArgumentResolver();
     }
 
     @Bean

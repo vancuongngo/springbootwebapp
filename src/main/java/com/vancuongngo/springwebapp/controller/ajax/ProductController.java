@@ -14,14 +14,13 @@ public class ProductController {
 
     @GetMapping(value = "/furniture")
     public Furniture checkFurniture(@IsFurniture Furniture furniture) {
-        furniture.setName(furniture.getName() + "new");
-        furniture.setChecked(true);
+        furniture.setName(furniture.getName() + " new");
         return furniture;
     }
 
     @GetMapping(value = "/flower")
     public Flower checkFlower(@IsFlower Flower flower) {
-        flower.setName(flower.getName() + "new");
+        flower.setName(flower.getName() + " new");
         flower.setChecked(true);
         return flower;
     }

@@ -4,7 +4,8 @@ $(function () {
             url: CONTEXT_ROOT + "ajax/product/furniture" ,
             data: {
                 name:"Chair",
-                usage:"Using for sitting"
+                usage:"Using for sitting",
+                time: new Date()
             },
             type: "GET",
             beforeSend: function (xhr) {
@@ -33,7 +34,8 @@ $(function () {
             url: CONTEXT_ROOT + "ajax/product/flower" ,
             data: {
                 name:"Rose",
-                numberOfPetal:5
+                numberOfPetal:5,
+                time: new Date()
             },
             type: "GET",
             beforeSend: function (xhr) {
