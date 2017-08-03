@@ -20,7 +20,6 @@ public class User extends AbstractDomainClass {
     private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable
     private List<Role> roles = new ArrayList<>();
 
     private int failedLoginAttempts = 0;
