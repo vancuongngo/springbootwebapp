@@ -2,16 +2,21 @@ package com.vancuongngo.springwebapp.configuration;
 
 import com.vancuongngo.springwebapp.service.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.RememberMeAuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
 import javax.sql.DataSource;
@@ -20,6 +25,10 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    @Value("${session.concurrent.maximum}")
+    private int maximumConcurrentSession;
+
+    @Qualifier("dataSource")
     @Autowired
     DataSource dataSource;
 
@@ -41,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureAuthManager(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.authenticationProvider(authenticationProvider);
+        authenticationManagerBuilder.authenticationProvider(rememberMeAuthenticationProvider());
         authenticationManagerBuilder.userDetailsService(userDetailsService);
     }
 
@@ -56,22 +66,41 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/product/new", "/console/**").hasAuthority("ADMIN")
-                .anyRequest().authenticated()
+                    .antMatchers("/product/new", "/console/**").hasAuthority("ADMIN")
+                    .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").failureForwardUrl("/login?error").permitAll()
+                    .formLogin().loginPage("/login").failureForwardUrl("/login?error").permitAll()
                 .and()
-                .rememberMe().rememberMeParameter("remember-me-param").rememberMeCookieName("my-remember-me").tokenValiditySeconds(86400).tokenRepository(persistentTokenRepository())
+                    .rememberMe()
+                    .rememberMeServices(rememberMeServices())
+                    .tokenValiditySeconds(86400)
                 .and()
-                .logout().permitAll();
+                    .logout().permitAll()
+                .and()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                    .maximumSessions(maximumConcurrentSession)
+                    .expiredUrl("/login?expired=")
+                .and()
+                    .sessionFixation().newSession()
+        ;
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
     }
 
     @Bean
+    public RememberMeAuthenticationProvider rememberMeAuthenticationProvider() {
+        return new RememberMeAuthenticationProvider("key123");
+    }
+    @Bean
     public PersistentTokenRepository persistentTokenRepository() {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
         return tokenRepository;
+    }
+
+    @Bean
+    public PersistentTokenBasedRememberMeServices rememberMeServices() {
+        return new PersistentTokenBasedRememberMeServices("key123", userDetailsService, persistentTokenRepository());
     }
 }

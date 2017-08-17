@@ -96,12 +96,12 @@ public class ProductLoader implements ApplicationListener<ContextRefreshedEvent>
     private void loadUsers() {
         User user1 = new User();
         user1.setUsername("user");
-        user1.setPassword("1");
+        user1.setPassword("password");
         userService.saveOrUpdate(user1);
 
         User user2 = new User();
         user2.setUsername("admin");
-        user2.setPassword("2");
+        user2.setPassword("password");
         userService.saveOrUpdate(user2);
     }
 

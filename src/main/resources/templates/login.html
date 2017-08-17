@@ -21,13 +21,13 @@
 
         <table class="table table-striped">
             <tr>
-                <td><label> User Name : <input type="text" name="username"/> </label></td>
+                <td><label> User Name : <input type="text" name="username" autofocus="autofocus" th:value="admin"/> </label></td>
             </tr>
             <tr>
-                <td><label> Password : <input type="password" name="password"/> </label></td>
+                <td><label> Password : <input type="password" name="password" th:value="password"/> </label></td>
             </tr>
             <tr>
-                <td><label> Remember me : <input type="checkbox" name="remember-me-param"/> </label></td>
+                <td><label> Remember me : <input type="checkbox" name="remember-me"/> </label></td>
             </tr>
             <tr>
                 <td> <button type="submit" class="btn btn-default">Sign In</button></td>
