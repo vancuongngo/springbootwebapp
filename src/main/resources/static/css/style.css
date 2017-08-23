@@ -6,3 +6,7 @@ input[type=submit] {
     text-decoration: underline;
     cursor:pointer;
 }
+
+.error {
+    color: red;
+}

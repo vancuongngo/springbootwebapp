@@ -9,14 +9,13 @@
     <th:block th:include="header :: header"></th:block>
 
     <div th:if="${param.error}">
-        <label style="color:red">Invalid username and password.</label>
-    </div>
-    <div th:if="${param.logout}">
-        <label>
-            You have been logged out.
-        </label>
+        <label class="error">Invalid username and password.</label>
     </div>
 
+    <div th:if="${not #strings.isEmpty(sessionLimit)}">
+        <small class="error" th:text="${sessionLimit}"></small>
+    </div>
+    <small th:if="${not #strings.isEmpty(msg)}" th:text="${msg}" class="error"></small>
     <form th:action="@{/login}" method="post">
 
         <table class="table table-striped">
